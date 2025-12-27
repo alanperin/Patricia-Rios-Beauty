@@ -87,7 +87,7 @@ const Home: React.FC = () => {
                   initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
                   className="text-brand-gold uppercase tracking-[0.3em] md:tracking-[0.5em] text-[10px] md:text-xs font-bold font-sans"
                 >
-                  High-End Beauty & Education
+                  Beleza de Alto Padrão & Educação
                 </motion.span>
              </div>
 
@@ -269,7 +269,7 @@ const Home: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
                 {/* Title Col */}
                 <div className="lg:col-span-5 sticky top-32 self-start">
-                    <span className="text-brand-gold uppercase tracking-[0.3em] text-xs font-bold mb-6 block font-sans">Education</span>
+                    <span className="text-brand-gold uppercase tracking-[0.3em] text-xs font-bold mb-6 block font-sans">Educação</span>
                     <h2 className="text-6xl md:text-8xl font-serif text-brand-brown leading-none mb-10">
                       PR <br/><span className="italic text-brand-gold">Academy</span>
                     </h2>
@@ -277,7 +277,7 @@ const Home: React.FC = () => {
                       Transformamos esteticistas em empresárias da beleza de alto faturamento. Domine a técnica e a gestão.
                     </p>
                     <Link to="/academy">
-                      <Button variant="primary" className="bg-brand-brown text-brand-gold hover:bg-brand-gold hover:text-brand-brown px-10 py-4 w-full md:w-auto">
+                      <Button variant="primary" className="!bg-brand-brown !text-brand-gold hover:!bg-brand-gold hover:!text-brand-brown px-10 py-4 w-full md:w-auto transition-colors duration-300">
                          Explorar Cursos
                       </Button>
                     </Link>
@@ -332,7 +332,7 @@ const Home: React.FC = () => {
       <section className="py-24 md:py-40 bg-brand-champagne relative overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="text-center mb-20">
-            <span className="text-brand-gold uppercase tracking-[0.3em] text-xs font-bold mb-6 block font-sans">Social Proof</span>
+            <span className="text-brand-gold uppercase tracking-[0.3em] text-xs font-bold mb-6 block font-sans">Depoimentos</span>
             <h2 className="text-5xl md:text-7xl font-serif text-brand-brown">Vozes Reais</h2>
           </div>
 
@@ -403,12 +403,12 @@ const Home: React.FC = () => {
             </h2>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Link to="/catalogo">
-                  <Button variant="primary" className="bg-brand-white text-brand-brown hover:bg-brand-brown hover:text-brand-white px-12 py-5 shadow-2xl min-w-[250px] text-sm">
+                  <Button variant="primary" className="!bg-brand-white !text-brand-brown hover:!bg-brand-brown hover:!text-brand-white px-12 py-5 shadow-2xl min-w-[250px] text-sm transition-colors duration-300">
                     Menu de Serviços
                   </Button>
                 </Link>
                 <Link to="/academy">
-                  <Button variant="primary" className="bg-brand-brown text-brand-gold hover:bg-brand-white hover:text-brand-brown px-12 py-5 shadow-xl min-w-[250px] text-sm">
+                  <Button variant="primary" className="!bg-brand-brown !text-brand-gold hover:!bg-brand-white hover:!text-brand-brown px-12 py-5 shadow-xl min-w-[250px] text-sm transition-colors duration-300">
                     Cursos & Mentoria
                   </Button>
                 </Link>

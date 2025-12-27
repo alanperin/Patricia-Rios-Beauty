@@ -29,8 +29,10 @@ const UnitPage: React.FC = () => {
     return <Navigate to="/" replace />;
   }
 
-  const whatsappLink = `https://wa.me/${unit.whatsapp}?text=Olá! Gostaria de agendar um momento especial no ${unit.name}.`;
-  const featuredServices = services.filter(s => s.featured).slice(0, 3);
+  const whatsappLink = `https://wa.me/${unit.whatsapp}?text=Olá! Vim pelo site e gostaria de agendar um momento especial no ${unit.name} (Unidade ${unit.city.split('-')[0].trim()}).`;
+  
+  // Filtra serviços desta unidade que sejam destaque
+  const featuredServices = services.filter(s => s.featured && s.availableIn && s.availableIn.includes(unit.slug)).slice(0, 3);
 
   return (
     <Layout>
@@ -132,10 +134,10 @@ const UnitPage: React.FC = () => {
            <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-20">
               <div className="w-full md:w-auto">
                  <span className="text-brand-gold uppercase tracking-[0.25em] text-[10px] font-bold mb-4 block font-sans">Menu de Procedimentos</span>
-                 <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-brand-brown">Sorriso Signature</h2>
+                 <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-brand-brown">Signature</h2>
               </div>
               <p className="max-w-md text-left md:text-right text-brand-gray font-light mt-6 md:mt-0 font-sans text-sm md:text-base">
-                Uma seleção curada dos procedimentos mais desejados pelas mulheres que frequentam nosso Loft em Sorriso.
+                Uma seleção curada dos procedimentos mais desejados pelas mulheres que frequentam nosso Loft em {unit.city.split('-')[0]}.
               </p>
            </div>
 
@@ -151,10 +153,14 @@ const UnitPage: React.FC = () => {
                  >
                     <div className="relative overflow-hidden aspect-[4/5] mb-6">
                        <img src={service.imageUrl} alt={service.title} className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110" />
-                       <div className="absolute inset-0 bg-brand-brown/10 group-hover:bg-transparent transition-all"></div>
-                       <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                       
+                       {/* Gradiente permanente para garantir a leitura do texto */}
+                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
+                       
+                       {/* Conteúdo sempre visível (Preço e Botão) */}
+                       <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
                           <span className="text-white font-bold text-lg drop-shadow-md">{service.price}</span>
-                          <span className="bg-brand-white text-brand-brown text-[10px] uppercase font-bold px-3 py-1 shadow-lg">Agendar</span>
+                          <span className="bg-brand-white text-brand-brown text-[10px] uppercase font-bold px-3 py-1 shadow-lg hover:bg-brand-gold transition-colors">Agendar</span>
                        </div>
                     </div>
                     <div className="flex justify-between items-start px-6">
@@ -168,7 +174,7 @@ const UnitPage: React.FC = () => {
            </div>
            
            <div className="mt-12 md:mt-16 text-center">
-              <a href="#/catalogo">
+              <a href={`#/catalogo/${unit.slug}`}>
                  <Button variant="outline" className="px-8 md:px-12 w-full md:w-auto">
                     Ver Menu Completo
                  </Button>

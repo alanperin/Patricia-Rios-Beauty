@@ -1,26 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { MAIN_WHATSAPP } from '../constants';
-import { useServices } from '../hooks/useContent';
-import { ServiceCategory, ServiceItem } from '../types';
+import { useServices, useUnits } from '../hooks/useContent';
+import { ServiceCategory, ServiceItem, UnitConfig } from '../types';
 import Loading from '../components/Loading';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Grid2X2, List, Clock, MessageCircle } from 'lucide-react';
+import { Grid2X2, List, Clock, MessageCircle, MapPin, ArrowRight } from 'lucide-react';
+import Button from '../components/Button';
 
 const Catalog: React.FC = () => {
+  const { citySlug } = useParams<{ citySlug: string }>();
   const [filter, setFilter] = useState<ServiceCategory | 'Todos'>('Todos');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  
+  // Ref para scroll automático
+  const servicesListRef = useRef<HTMLDivElement>(null);
 
   // Hook de Dados
-  const { services, loading } = useServices();
+  const { services, loading: servicesLoading } = useServices();
+  const { units, loading: unitsLoading } = useUnits();
 
+  // Efeito de scroll automático ao mudar filtro
+  useEffect(() => {
+    if (servicesListRef.current) {
+        // Pequeno delay para garantir que a UI atualizou se estivermos trocando de uma lista muito longa para uma curta
+        setTimeout(() => {
+            servicesListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+  }, [filter]);
+
+  if (servicesLoading || unitsLoading) return <Loading fullScreen />;
+
+  // --------------------------------------------------------------------------
+  // LÓGICA 1: SE NÃO TIVER SLUG (OU SLUG INVÁLIDO), MOSTRA SELEÇÃO DE UNIDADE
+  // --------------------------------------------------------------------------
+  const selectedUnit = units.find(u => u.slug === citySlug);
+
+  if (!citySlug || !selectedUnit) {
+    return <UnitSelectionScreen units={units} />;
+  }
+
+  // --------------------------------------------------------------------------
+  // LÓGICA 2: EXIBIÇÃO DO CATÁLOGO FILTRADO PELA UNIDADE
+  // --------------------------------------------------------------------------
+  
+  // 1. Filtra serviços disponíveis nesta unidade
+  const unitServices = services.filter(service => 
+    service.availableIn && service.availableIn.includes(selectedUnit.slug)
+  );
+
+  // 2. Filtra por categoria selecionada
   const filteredServices = filter === 'Todos' 
-    ? services 
-    : services.filter(service => service.category === filter);
+    ? unitServices 
+    : unitServices.filter(service => service.category === filter);
 
   const categories = ['Todos', ...Object.values(ServiceCategory)];
 
-  if (loading) return <Loading fullScreen />;
+  // Define qual WhatsApp usar (o da unidade específica)
+  const contactNumber = selectedUnit.whatsapp; 
 
   return (
     <Layout>
@@ -29,10 +68,17 @@ const Catalog: React.FC = () => {
           
           {/* Header */}
           <div className="text-center mb-10 md:mb-16 animate-fade-in">
-            <span className="text-brand-gold uppercase tracking-[0.3em] text-[10px] font-bold mb-4 block font-sans">Menu de Procedimentos</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-brand-brown mb-6">Catálogo Digital</h1>
+            <div className="flex items-center justify-center gap-2 mb-4">
+                 <Link to="/catalogo" className="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gray hover:text-brand-gold transition-colors flex items-center gap-1">
+                    Unidades <ArrowRight className="w-3 h-3" />
+                 </Link>
+                 <span className="text-brand-gold uppercase tracking-[0.2em] text-[10px] font-bold block font-sans">
+                    {selectedUnit.city}
+                 </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-brand-brown mb-6">Menu de Serviços</h1>
             <p className="max-w-xl mx-auto text-brand-gray font-light font-sans mb-8 text-sm md:text-base">
-              Explore nossos tratamentos exclusivos. Cada procedimento é realizado com técnicas de vanguarda e insumos de padrão internacional.
+              Protocolos exclusivos disponíveis na unidade <strong>{selectedUnit.name}</strong>.
             </p>
             <div className="w-16 h-[1px] bg-brand-gold/30 mx-auto"></div>
           </div>
@@ -59,7 +105,7 @@ const Catalog: React.FC = () => {
               </div>
             </div>
 
-            {/* View Mode Toggle (Hidden on very small screens, default grid) */}
+            {/* View Mode Toggle */}
             <div className="hidden md:flex bg-brand-white p-1 rounded-lg border border-brand-brown/5 shadow-sm">
                 <button 
                   onClick={() => setViewMode('grid')}
@@ -78,13 +124,16 @@ const Catalog: React.FC = () => {
             </div>
           </div>
 
+          {/* Anchor for Auto Scroll */}
+          <div ref={servicesListRef} className="scroll-mt-48"></div>
+
           {/* Content */}
           <motion.div layout className={`min-h-[400px] ${viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8' : 'flex flex-col gap-6'}`}>
             <AnimatePresence mode="popLayout">
               {filteredServices.map((service) => (
                 viewMode === 'grid' 
-                  ? <ServiceCardGrid key={service.id} service={service} />
-                  : <ServiceCardList key={service.id} service={service} />
+                  ? <ServiceCardGrid key={service.id} service={service} whatsappNumber={contactNumber} unitName={selectedUnit.name} />
+                  : <ServiceCardList key={service.id} service={service} whatsappNumber={contactNumber} unitName={selectedUnit.name} />
               ))}
             </AnimatePresence>
           </motion.div>
@@ -92,7 +141,7 @@ const Catalog: React.FC = () => {
           {/* Empty State */}
           {filteredServices.length === 0 && (
             <div className="text-center py-32 text-brand-gray/40 font-serif italic text-xl">
-              Nenhum serviço encontrado nesta categoria.
+              Nenhum serviço encontrado nesta categoria para esta unidade.
             </div>
           )}
         </div>
@@ -101,9 +150,61 @@ const Catalog: React.FC = () => {
   );
 };
 
+// --- COMPONENTE: TELA DE SELEÇÃO DE UNIDADE ---
+const UnitSelectionScreen: React.FC<{ units: UnitConfig[] }> = ({ units }) => {
+    return (
+        <Layout>
+            <div className="min-h-screen bg-brand-brown flex items-center justify-center relative overflow-hidden py-20 px-6">
+                 {/* Background Grain/Noise */}
+                 <div className="absolute inset-0 bg-noise opacity-10"></div>
+                 
+                 <div className="max-w-6xl w-full z-10">
+                     <div className="text-center mb-16">
+                         <span className="text-brand-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block font-sans animate-fade-in">
+                            Menu Exclusivo
+                         </span>
+                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-brand-white mb-6 animate-slide-up">
+                            Selecione sua <span className="italic text-brand-gold">Unidade</span>
+                         </h1>
+                         <p className="text-brand-white/60 font-light text-lg max-w-2xl mx-auto font-sans animate-slide-up" style={{ animationDelay: '0.1s' }}>
+                            Para garantir a precisão das informações e valores, por favor, escolha o Loft Beauty mais próximo de você.
+                         </p>
+                     </div>
+
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                         {units.map((unit, idx) => (
+                             <Link to={`/catalogo/${unit.slug}`} key={unit.slug} className="group relative block h-[400px] md:h-[500px] overflow-hidden rounded-sm shadow-2xl">
+                                 <img 
+                                    src={unit.heroImage} 
+                                    alt={unit.name} 
+                                    className="w-full h-full object-cover transition-transform duration-[1.5s] ease-in-out group-hover:scale-110 grayscale-[30%] group-hover:grayscale-0"
+                                 />
+                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500"></div>
+                                 
+                                 <div className="absolute bottom-0 left-0 w-full p-8 md:p-12">
+                                     <div className="flex items-center gap-2 mb-3 opacity-80">
+                                         <MapPin className="w-4 h-4 text-brand-gold" />
+                                         <span className="text-brand-white text-xs uppercase tracking-widest">{unit.city}</span>
+                                     </div>
+                                     <h2 className="text-3xl md:text-5xl font-serif text-brand-white mb-6 group-hover:translate-x-2 transition-transform duration-500">
+                                         {unit.name.replace("Loft Beauty", "").trim()}
+                                     </h2>
+                                     <span className="inline-flex items-center gap-3 text-brand-gold text-xs uppercase tracking-[0.2em] font-bold group-hover:gap-6 transition-all duration-300">
+                                         Ver Catálogo <ArrowRight className="w-4 h-4" />
+                                     </span>
+                                 </div>
+                             </Link>
+                         ))}
+                     </div>
+                 </div>
+            </div>
+        </Layout>
+    )
+}
+
 // --- GRID VIEW COMPONENT ---
-const ServiceCardGrid: React.FC<{ service: ServiceItem }> = ({ service }) => {
-  const whatsappUrl = `https://wa.me/${MAIN_WHATSAPP}?text=Olá! Vi o *${service.title}* no catálogo e gostaria de saber mais detalhes e disponibilidade.`;
+const ServiceCardGrid: React.FC<{ service: ServiceItem, whatsappNumber: string, unitName: string }> = ({ service, whatsappNumber, unitName }) => {
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Olá! Vim pelo catálogo online da unidade *${unitName}* e me interessei pelo *${service.title}*. Poderia me dar mais detalhes?`;
 
   return (
     <motion.div
@@ -148,7 +249,7 @@ const ServiceCardGrid: React.FC<{ service: ServiceItem }> = ({ service }) => {
         <div className="pt-6 border-t border-brand-brown/5 flex items-center justify-between mt-auto">
             <div className="flex flex-col">
               <span className="text-[9px] text-brand-gray uppercase tracking-wider mb-1 font-sans">Investimento</span>
-              <span className="text-xl font-serif text-brand-brown">{service.price}</span>
+              <span className="text-lg font-serif text-brand-brown">{service.price}</span>
             </div>
             <a 
               href={whatsappUrl}
@@ -165,8 +266,8 @@ const ServiceCardGrid: React.FC<{ service: ServiceItem }> = ({ service }) => {
 };
 
 // --- LIST VIEW COMPONENT ---
-const ServiceCardList: React.FC<{ service: ServiceItem }> = ({ service }) => {
-    const whatsappUrl = `https://wa.me/${MAIN_WHATSAPP}?text=Olá! Vi o *${service.title}* no catálogo e gostaria de saber mais detalhes e disponibilidade.`;
+const ServiceCardList: React.FC<{ service: ServiceItem, whatsappNumber: string, unitName: string }> = ({ service, whatsappNumber, unitName }) => {
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Olá! Vim pelo catálogo online da unidade *${unitName}* e me interessei pelo *${service.title}*. Poderia me dar mais detalhes?`;
   
     return (
       <motion.div
@@ -201,7 +302,7 @@ const ServiceCardList: React.FC<{ service: ServiceItem }> = ({ service }) => {
         <div className="flex flex-row md:flex-col items-center gap-4 md:gap-2 w-full md:w-auto justify-between md:justify-center border-t md:border-t-0 md:border-l border-brand-brown/10 pt-4 md:pt-0 md:pl-6">
              <div className="text-right md:text-center">
                  <span className="block text-[9px] text-brand-gray uppercase tracking-wider mb-1 font-sans">Investimento</span>
-                 <span className="block text-xl font-serif text-brand-brown">{service.price}</span>
+                 <span className="block text-lg font-serif text-brand-brown">{service.price}</span>
              </div>
              
              <a 

@@ -11,7 +11,10 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        {/* Rota raiz do catálogo -> Seleção de Unidade */}
         <Route path="/catalogo" element={<Catalog />} />
+        {/* Rota específica da unidade -> Lista de Serviços */}
+        <Route path="/catalogo/:citySlug" element={<Catalog />} />
         <Route path="/academy" element={<Academy />} />
         <Route path="/unidade/:slug" element={<UnitPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />

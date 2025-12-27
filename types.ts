@@ -17,6 +17,7 @@ export interface ServiceItem {
   imageUrl?: string;
   duration?: string;
   featured: boolean;
+  availableIn: string[]; // Array of unit slugs (e.g., ['sorriso', 'chapadao'])
 }
 
 export interface UnitConfig {
