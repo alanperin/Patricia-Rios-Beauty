@@ -16,7 +16,8 @@ export const ACADEMY_PRODUCTS: AcademyProduct[] = [
     title: 'Mentoria VIP Individual',
     type: 'Mentoria',
     description: 'Acompanhamento exclusivo para profissionais que desejam elevar seu ticket médio e dominar técnicas avançadas de gestão e micropigmentação.',
-    imageUrl: 'https://images.unsplash.com/photo-1515165597731-98cc0604f260?q=80&w=1000&auto=format&fit=crop'
+    // Nova imagem: Mulher ensinando/liderando
+    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=1000&auto=format&fit=crop'
   },
   {
     id: 'curso-nanoblading',
