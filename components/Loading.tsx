@@ -1,0 +1,34 @@
+
+import React from 'react';
+import { PRLogo } from './Layout';
+
+interface LoadingProps {
+  fullScreen?: boolean;
+}
+
+const Loading: React.FC<LoadingProps> = ({ fullScreen = false }) => {
+  if (fullScreen) {
+    return (
+      <div className="fixed inset-0 bg-brand-black z-50 flex flex-col items-center justify-center">
+        <div className="relative">
+           <PRLogo className="w-16 h-16 text-brand-gold animate-pulse" />
+           <div className="absolute top-0 left-0 w-full h-full animate-ping opacity-20 bg-brand-gold rounded-full blur-xl"></div>
+        </div>
+        <span className="mt-8 text-[10px] uppercase tracking-[0.4em] text-brand-white/40 font-sans animate-fade-in">
+          Carregando
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full h-64 flex flex-col items-center justify-center bg-brand-white/5 rounded-sm border border-brand-white/5">
+       <PRLogo className="w-8 h-8 text-brand-gold/50 animate-pulse mb-4" />
+       <span className="text-[9px] uppercase tracking-widest text-brand-white/20 font-sans">
+          Atualizando...
+       </span>
+    </div>
+  );
+};
+
+export default Loading;
