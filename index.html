@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon: Monograma PR Luxo (Gold on Deep Brown) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232A231C'/%3E%3Cpath d='M30,15 L30,85 M25,15 L50,15 C70,15 80,25 80,45 C80,65 70,75 50,75 M50,75 L80,95' stroke='%23C5A059' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    
     <title>Patricia Rios Beauty</title>
     <meta name="description" content="Excelência em beleza e estética. Unidades Sorriso e Academy.">
     <!-- Google Fonts: Playfair Display (Serif matches logo style) and Poppins (Sans matches PDF Brand Identity) -->
@@ -16,16 +19,18 @@
           extend: {
             colors: {
               brand: {
-                black: '#0a0a0a',      // Fundo luxuoso profundo
-                gold: '#C5A47E',       // Dourado "Bege/Nude" (Baseado na pág 13 do PDF - mais sofisticado)
-                goldLight: '#E5Ccb3',  // Variação clara para hover
-                white: '#F5F5F3',      // Off-white levemente quente (Papel de revista)
-                gray: '#1c1c1c'        // Elementos secundários
+                cream: '#FAF9F6',      // Fundo Principal (Off-white luxo/Pérola)
+                champagne: '#F0E5D8',  // Fundo Secundário (Bege Quente)
+                brown: '#2A231C',      // Texto Principal / Elementos Escuros (Marrom Café Expresso)
+                gray: '#665F58',       // Texto Secundário (Taupe)
+                gold: '#C5A059',       // Dourado Principal (Metálico)
+                bronze: '#8A6D3B',     // Dourado Escuro/Bronze para hover e bordas
+                white: '#FFFFFF'       // Branco Puro
               }
             },
             fontFamily: {
               serif: ['"Playfair Display"', 'serif'],
-              sans: ['"Poppins"', 'sans-serif'], // Adjusted per PDF Visual Identity
+              sans: ['"Poppins"', 'sans-serif'],
             },
             letterSpacing: {
               'widest-xl': '0.25em',
@@ -55,24 +60,39 @@
     </script>
     <style>
       body {
-        background-color: #0a0a0a;
-        color: #F5F5F3;
+        background-color: #FAF9F6;
+        color: #2A231C;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        cursor: none; /* Hide default cursor for custom implementation */
       }
+
+      /* Noise Texture Class */
+      .bg-noise {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 50;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
       /* Custom Scrollbar for Luxury Feel */
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #0a0a0a;
+        background: #FAF9F6;
       }
       ::-webkit-scrollbar-thumb {
-        background: #333;
-        border-radius: 4px;
+        background: #C5A059;
+        border-radius: 3px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #C5A47E;
+        background: #8A6D3B;
       }
       
       .hide-scrollbar::-webkit-scrollbar {
@@ -81,6 +101,13 @@
       .hide-scrollbar {
         -ms-overflow-style: none;
         scrollbar-width: none;
+      }
+
+      /* Mobile: Show default cursor */
+      @media (pointer: coarse) {
+        body {
+          cursor: auto;
+        }
       }
     </style>
   <script type="importmap">

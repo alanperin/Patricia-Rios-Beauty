@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -36,9 +35,9 @@ const UnitPage: React.FC = () => {
   return (
     <Layout>
       {/* 1. CINEMATIC HERO */}
-      <section className="relative h-screen w-full overflow-hidden bg-brand-black">
+      <section className="relative h-screen w-full overflow-hidden bg-brand-brown">
         <motion.div style={{ y: heroParallax }} className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-brand-black z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-brown/30 via-transparent to-brand-brown/90 z-10" />
           <img 
             src={unit.heroImage} 
             alt={unit.name} 
@@ -46,23 +45,23 @@ const UnitPage: React.FC = () => {
           />
         </motion.div>
         
-        <div className="relative z-20 h-full flex flex-col justify-end pb-32 max-w-[1400px] mx-auto px-6">
+        <div className="relative z-20 h-full flex flex-col justify-end pb-20 md:pb-32 max-w-[1400px] mx-auto px-6">
            <motion.div
              initial={{ opacity: 0, y: 50 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ duration: 1, ease: "easeOut" }}
              style={{ y: contentY }}
            >
-              <div className="flex items-center gap-4 mb-6">
-                 <div className="h-[1px] w-12 bg-brand-gold"></div>
-                 <span className="text-brand-gold uppercase tracking-[0.4em] text-xs font-bold font-sans">
-                    The Sanctuary
+              <div className="flex items-center gap-4 mb-4 md:mb-6">
+                 <div className="h-[1px] w-8 md:w-12 bg-brand-gold"></div>
+                 <span className="text-brand-gold uppercase tracking-[0.4em] text-[10px] md:text-xs font-bold font-sans shadow-black drop-shadow-md">
+                    O Santuário
                  </span>
               </div>
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif text-brand-white leading-none mb-6">
+              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-serif text-brand-white leading-none mb-4 md:mb-6 drop-shadow-2xl">
                 {unit.name.replace('Loft Beauty ', '')}
               </h1>
-              <p className="text-xl md:text-2xl font-light text-brand-white/80 max-w-xl font-sans leading-relaxed">
+              <p className="text-lg md:text-2xl font-light text-brand-white/90 max-w-xl font-sans leading-relaxed drop-shadow-md">
                 {unit.city}
               </p>
            </motion.div>
@@ -70,32 +69,32 @@ const UnitPage: React.FC = () => {
       </section>
 
       {/* 2. THE CONCEPT & ATMOSPHERE */}
-      <section className="py-24 md:py-40 bg-brand-black relative">
-         <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <section className="py-20 md:py-40 bg-brand-cream relative text-brand-brown">
+         <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
             <div className="order-2 lg:order-1">
                <motion.span 
                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-                 className="text-brand-gold uppercase tracking-[0.25em] text-[10px] font-bold mb-6 block font-sans"
+                 className="text-brand-gold uppercase tracking-[0.25em] text-[10px] font-bold mb-4 md:mb-6 block font-sans"
                >
                  O Conceito
                </motion.span>
                <motion.h2 
                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                 className="text-4xl md:text-6xl font-serif text-brand-white mb-8 leading-tight"
+                 className="text-3xl md:text-4xl lg:text-6xl font-serif text-brand-brown mb-6 md:mb-8 leading-tight"
                >
                  Um refúgio para <br/> sua <span className="italic text-brand-gold">melhor versão</span>.
                </motion.h2>
                <motion.p 
                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-                 className="text-brand-white/60 text-lg leading-loose font-light font-sans mb-12 text-justify"
+                 className="text-brand-gray text-base md:text-lg leading-loose font-light font-sans mb-10 md:mb-12 text-justify"
                >
                  {unit.description}
                </motion.p>
                
                {/* Amenities Grid */}
-               <div className="grid grid-cols-2 gap-y-8 gap-x-4 border-t border-brand-white/10 pt-8">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 md:gap-y-8 gap-x-4 border-t border-brand-brown/10 pt-8">
                   {unit.amenities?.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3 text-brand-white/80 font-serif italic">
+                    <div key={index} className="flex items-center gap-3 text-brand-brown font-serif italic text-sm md:text-base">
                        <Sparkles className="w-4 h-4 text-brand-gold" />
                        <span>{item}</span>
                     </div>
@@ -109,7 +108,7 @@ const UnitPage: React.FC = () => {
                   className="space-y-4 mt-12"
                 >
                    {unit.galleryImages[0] && (
-                     <img src={unit.galleryImages[0]} className="w-full aspect-[3/4] object-cover rounded-sm grayscale hover:grayscale-0 transition-all duration-700" alt="Interior Detail" />
+                     <img src={unit.galleryImages[0]} className="w-full aspect-[3/4] object-cover rounded-sm shadow-lg grayscale-[20%] hover:grayscale-0 transition-all duration-700" alt="Interior Detail" />
                    )}
                 </motion.div>
                 <motion.div 
@@ -117,10 +116,10 @@ const UnitPage: React.FC = () => {
                    className="space-y-4"
                 >
                    {unit.galleryImages[1] && (
-                      <img src={unit.galleryImages[1]} className="w-full aspect-[3/4] object-cover rounded-sm grayscale hover:grayscale-0 transition-all duration-700" alt="Interior Detail" />
+                      <img src={unit.galleryImages[1]} className="w-full aspect-[3/4] object-cover rounded-sm shadow-lg grayscale-[20%] hover:grayscale-0 transition-all duration-700" alt="Interior Detail" />
                    )}
-                   <div className="p-6 bg-brand-gray/20 border border-brand-white/5 text-center">
-                      <p className="font-serif italic text-brand-gold text-2xl">"Luxury is in each detail."</p>
+                   <div className="p-4 md:p-6 bg-white border border-brand-brown/5 text-center shadow-md">
+                      <p className="font-serif italic text-brand-gold text-lg md:text-2xl">"O luxo está em cada detalhe."</p>
                    </div>
                 </motion.div>
             </div>
@@ -128,14 +127,14 @@ const UnitPage: React.FC = () => {
       </section>
 
       {/* 3. EXCLUSIVE MENU PREVIEW */}
-      <section className="py-32 bg-brand-white text-brand-black">
+      <section className="py-20 md:py-32 bg-brand-champagne text-brand-brown">
         <div className="max-w-[1400px] mx-auto px-6">
-           <div className="flex flex-col md:flex-row justify-between items-end mb-20">
-              <div>
+           <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-20">
+              <div className="w-full md:w-auto">
                  <span className="text-brand-gold uppercase tracking-[0.25em] text-[10px] font-bold mb-4 block font-sans">Menu de Procedimentos</span>
-                 <h2 className="text-5xl md:text-7xl font-serif text-brand-black">Sorriso Signature</h2>
+                 <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-brand-brown">Sorriso Signature</h2>
               </div>
-              <p className="max-w-md text-right text-brand-gray/60 font-light mt-6 md:mt-0 font-sans">
+              <p className="max-w-md text-left md:text-right text-brand-gray font-light mt-6 md:mt-0 font-sans text-sm md:text-base">
                 Uma seleção curada dos procedimentos mais desejados pelas mulheres que frequentam nosso Loft em Sorriso.
               </p>
            </div>
@@ -148,29 +147,29 @@ const UnitPage: React.FC = () => {
                    whileInView={{ opacity: 1, y: 0 }}
                    viewport={{ once: true }}
                    transition={{ delay: idx * 0.1 }}
-                   className="group cursor-pointer"
+                   className="group cursor-pointer bg-white shadow-sm hover:shadow-xl transition-all duration-300 pb-6 rounded-sm"
                  >
                     <div className="relative overflow-hidden aspect-[4/5] mb-6">
                        <img src={service.imageUrl} alt={service.title} className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110" />
-                       <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all"></div>
+                       <div className="absolute inset-0 bg-brand-brown/10 group-hover:bg-transparent transition-all"></div>
                        <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                          <span className="text-white font-bold text-lg">{service.price}</span>
-                          <span className="bg-brand-white text-brand-black text-[10px] uppercase font-bold px-3 py-1">Agendar</span>
+                          <span className="text-white font-bold text-lg drop-shadow-md">{service.price}</span>
+                          <span className="bg-brand-white text-brand-brown text-[10px] uppercase font-bold px-3 py-1 shadow-lg">Agendar</span>
                        </div>
                     </div>
-                    <div className="flex justify-between items-start">
+                    <div className="flex justify-between items-start px-6">
                        <div>
-                          <h3 className="text-2xl font-serif mb-2 group-hover:text-brand-gold transition-colors">{service.title}</h3>
-                          <p className="text-brand-gray/50 text-xs uppercase tracking-widest font-sans">{service.category} • {service.duration}</p>
+                          <h3 className="text-2xl font-serif mb-2 text-brand-brown group-hover:text-brand-gold transition-colors">{service.title}</h3>
+                          <p className="text-brand-gray text-xs uppercase tracking-widest font-sans">{service.category} • {service.duration}</p>
                        </div>
                     </div>
                  </motion.div>
               ))}
            </div>
            
-           <div className="mt-16 text-center">
+           <div className="mt-12 md:mt-16 text-center">
               <a href="#/catalogo">
-                 <Button variant="outline" className="border-brand-black text-brand-black hover:bg-brand-black hover:text-brand-white px-12">
+                 <Button variant="outline" className="px-8 md:px-12 w-full md:w-auto">
                     Ver Menu Completo
                  </Button>
               </a>
@@ -178,10 +177,10 @@ const UnitPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. LOCATION & CONTACT (Editorial Style) */}
-      <section className="bg-[#EAEAEA] text-brand-black">
-         <div className="grid grid-cols-1 md:grid-cols-2 min-h-[600px]">
-            <div className="relative w-full h-[400px] md:h-auto grayscale invert contrast-[0.9]">
+      {/* 4. LOCATION & CONTACT */}
+      <section className="bg-brand-cream text-brand-brown border-t border-brand-brown/5">
+         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-auto lg:min-h-[600px]">
+            <div className="relative w-full h-[400px] lg:h-auto grayscale-[50%] hover:grayscale-0 transition-all duration-700 order-2 lg:order-1">
                <iframe 
                   src={unit.mapEmbedUrl} 
                   width="100%" 
@@ -194,35 +193,35 @@ const UnitPage: React.FC = () => {
                ></iframe>
             </div>
             
-            <div className="p-12 md:p-32 flex flex-col justify-center">
-               <span className="text-brand-gold uppercase tracking-[0.25em] text-[10px] font-bold mb-6 font-sans">
+            <div className="p-8 md:p-12 lg:p-32 flex flex-col justify-center bg-brand-white/50 order-1 lg:order-2">
+               <span className="text-brand-gold uppercase tracking-[0.25em] text-[10px] font-bold mb-4 md:mb-6 font-sans">
                   Visite-nos
                </span>
-               <h2 className="text-4xl md:text-5xl font-serif mb-12">
+               <h2 className="text-3xl md:text-5xl font-serif mb-8 md:mb-12 text-brand-brown">
                   Estamos esperando <br/> por você.
                </h2>
                
-               <div className="space-y-8 mb-12">
-                  <div className="flex gap-6">
+               <div className="space-y-6 md:space-y-8 mb-8 md:mb-12">
+                  <div className="flex gap-4 md:gap-6">
                      <MapPin className="w-6 h-6 text-brand-gold flex-shrink-0 mt-1" />
                      <div>
-                        <h4 className="font-bold uppercase tracking-widest text-xs mb-2 font-sans">Endereço</h4>
-                        <p className="font-serif text-xl leading-relaxed max-w-xs">{unit.address}</p>
+                        <h4 className="font-bold uppercase tracking-widest text-xs mb-2 font-sans text-brand-brown">Endereço</h4>
+                        <p className="font-serif text-lg md:text-xl leading-relaxed max-w-xs text-brand-gray">{unit.address}</p>
                      </div>
                   </div>
                   
-                  <div className="flex gap-6">
+                  <div className="flex gap-4 md:gap-6">
                      <Clock className="w-6 h-6 text-brand-gold flex-shrink-0 mt-1" />
                      <div>
-                        <h4 className="font-bold uppercase tracking-widest text-xs mb-2 font-sans">Horário de Atendimento</h4>
-                        <p className="font-serif text-lg text-brand-gray/80">Segunda a Sexta: 08h às 19h</p>
-                        <p className="font-serif text-lg text-brand-gray/80">Sábados: 08h às 14h</p>
+                        <h4 className="font-bold uppercase tracking-widest text-xs mb-2 font-sans text-brand-brown">Horário de Atendimento</h4>
+                        <p className="font-serif text-base md:text-lg text-brand-gray">Segunda a Sexta: 08h às 19h</p>
+                        <p className="font-serif text-base md:text-lg text-brand-gray">Sábados: 08h às 14h</p>
                      </div>
                   </div>
                </div>
                
                <a href={whatsappLink} target="_blank" rel="noreferrer">
-                  <Button variant="primary" className="bg-brand-black text-brand-white hover:bg-brand-gold hover:text-brand-black w-full md:w-auto shadow-xl">
+                  <Button variant="primary" className="w-full md:w-auto shadow-xl">
                      Agendar via WhatsApp
                   </Button>
                </a>
