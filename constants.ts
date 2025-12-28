@@ -3,7 +3,10 @@ import { ServiceCategory, ServiceItem, UnitConfig, AcademyProduct, Testimonial }
 
 /**
  * ==============================================================================
- * ARQUIVO DE CONFIGURAÇÃO GERAL
+ * ARQUIVO DE CONFIGURAÇÃO GERAL E CONTEÚDO
+ * ------------------------------------------------------------------------------
+ * Para alterar as imagens, substitua os links dentro de 'imageUrl'.
+ * Você pode usar links do Google Drive (públicos), Hospedagem de Imagens ou URL do seu site.
  * ==============================================================================
  */
 
@@ -16,7 +19,7 @@ export const ACADEMY_PRODUCTS: AcademyProduct[] = [
     title: 'Mentoria VIP Individual',
     type: 'Mentoria',
     description: 'Acompanhamento exclusivo para profissionais que desejam elevar seu ticket médio e dominar técnicas avançadas de gestão e micropigmentação.',
-    // Nova imagem: Mulher ensinando/liderando
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=1000&auto=format&fit=crop'
   },
   {
@@ -24,6 +27,7 @@ export const ACADEMY_PRODUCTS: AcademyProduct[] = [
     title: 'Expert em Nanoblading',
     type: 'Presencial',
     description: 'Imersão técnica completa na metodologia Patricia Rios. Do desenho artístico à aplicação perfeita.',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1000&auto=format&fit=crop'
   },
   {
@@ -31,6 +35,7 @@ export const ACADEMY_PRODUCTS: AcademyProduct[] = [
     title: 'Masterclass: Mapeamento Áureo',
     type: 'Online',
     description: 'Workshop digital focado na simetria perfeita. O segredo por trás dos olhares mais desejados do Brasil.',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1000&auto=format&fit=crop'
   }
 ];
@@ -75,7 +80,9 @@ export const TESTIMONIALS: Testimonial[] = [
 ];
 
 export const SERVICES: ServiceItem[] = [
-  // --- MICROPIGMENTAÇÃO (Sobrancelhas & Lábios) ---
+  // ==========================================================================
+  // CATEGORIA: MICROPIGMENTAÇÃO
+  // ==========================================================================
   {
     id: 'nanoblading',
     title: 'Nanoblading Fio a Fio',
@@ -83,6 +90,7 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 850,00',
     category: ServiceCategory.MICROPIGMENTACAO,
     duration: '2h 30m',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1588006173599-2a9000a98343?q=80&w=1000&auto=format&fit=crop', 
     featured: true,
     availableIn: ['sorriso', 'chapadao']
@@ -94,6 +102,7 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 750,00',
     category: ServiceCategory.MICROPIGMENTACAO,
     duration: '2h',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?q=80&w=1000&auto=format&fit=crop',
     featured: true,
     availableIn: ['sorriso', 'chapadao']
@@ -105,12 +114,27 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 800,00',
     category: ServiceCategory.MICROPIGMENTACAO,
     duration: '2h 30m',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1617391654470-7634f378a9c2?q=80&w=1000&auto=format&fit=crop',
     featured: false,
     availableIn: ['sorriso', 'chapadao']
   },
+  {
+    id: 'shadow-line',
+    title: 'Shadow Line',
+    description: 'Combinação perfeita entre fios realistas e um leve sombreado ao fundo para maior densidade e definição. Ideal para quem gosta de um efeito levemente maquiado.',
+    price: 'A partir de R$ 900,00',
+    category: ServiceCategory.MICROPIGMENTACAO,
+    duration: '2h 45m',
+    // TROQUE A IMAGEM ABAIXO
+    imageUrl: 'https://images.unsplash.com/photo-1620052309789-a2a1b94d8234?q=80&w=1000&auto=format&fit=crop',
+    featured: false,
+    availableIn: ['sorriso']
+  },
 
-  // --- DESIGN & OLHAR (Manutenção) ---
+  // ==========================================================================
+  // CATEGORIA: DESIGN & OLHAR
+  // ==========================================================================
   {
     id: 'design-personalizado',
     title: 'Design de Sobrancelhas Personalizado',
@@ -118,6 +142,7 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 60,00',
     category: ServiceCategory.DESIGN_OLHAR,
     duration: '45m',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop',
     featured: false,
     availableIn: ['sorriso', 'chapadao']
@@ -129,6 +154,7 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 85,00',
     category: ServiceCategory.DESIGN_OLHAR,
     duration: '1h',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=1000&auto=format&fit=crop',
     featured: false,
     availableIn: ['sorriso', 'chapadao']
@@ -140,9 +166,22 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 220,00',
     category: ServiceCategory.DESIGN_OLHAR,
     duration: '1h 15m',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1587779782352-7b0f796120b4?q=80&w=1000&auto=format&fit=crop',
     featured: true,
     availableIn: ['sorriso', 'chapadao']
+  },
+  {
+    id: 'brow-lamination',
+    title: 'Brow Lamination',
+    description: 'Técnica que alinha os fios naturais da sobrancelha para cima, criando um visual mais cheio, moderno e fashionista.',
+    price: 'A partir de R$ 190,00',
+    category: ServiceCategory.DESIGN_OLHAR,
+    duration: '1h',
+    // TROQUE A IMAGEM ABAIXO
+    imageUrl: 'https://images.unsplash.com/photo-1512413914633-b5043f4041ea?q=80&w=1000&auto=format&fit=crop',
+    featured: false,
+    availableIn: ['sorriso']
   },
   {
     id: 'microagulhamento-sobrancelha',
@@ -151,23 +190,15 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 180,00',
     category: ServiceCategory.DESIGN_OLHAR,
     duration: '1h',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=1000&auto=format&fit=crop',
     featured: false,
     availableIn: ['sorriso', 'chapadao']
   },
-  {
-    id: 'buco-linha',
-    title: 'Epilação de Buço (Egípcia)',
-    description: 'Remoção dos pêlos do buço com linha, garantindo acabamento perfeito e duradouro sem agredir a pele sensível da região.',
-    price: 'A partir de R$ 30,00',
-    category: ServiceCategory.FACIAL,
-    duration: '15m',
-    imageUrl: 'https://images.unsplash.com/photo-1512413914633-b5043f4041ea?q=80&w=1000&auto=format&fit=crop',
-    featured: false,
-    availableIn: ['sorriso', 'chapadao']
-  },
 
-  // --- CABELO ---
+  // ==========================================================================
+  // CATEGORIA: CABELO
+  // ==========================================================================
   {
     id: 'corte-terapeutico',
     title: 'Corte Terapêutico & Visagismo',
@@ -175,7 +206,8 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 150,00',
     category: ServiceCategory.CABELO,
     duration: '1h 30m',
-    imageUrl: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=1000&auto=format&fit=crop', // Reusing placeholder, ideally precise hair image
+    // TROQUE A IMAGEM ABAIXO
+    imageUrl: 'https://images.unsplash.com/photo-1620331311520-246422fd82f9?q=80&w=1000&auto=format&fit=crop',
     featured: false,
     availableIn: ['sorriso', 'chapadao']
   },
@@ -186,12 +218,27 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 250,00',
     category: ServiceCategory.CABELO,
     duration: '1h 30m',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1000&auto=format&fit=crop',
     featured: false,
     availableIn: ['sorriso', 'chapadao']
   },
+  {
+    id: 'mechas-criativas',
+    title: 'Mechas Criativas & Iluminação',
+    description: 'Técnicas de Morena Iluminada, Babylights ou Contour. Preservamos a saúde do fio enquanto criamos pontos de luz estratégicos.',
+    price: 'Sob Consulta',
+    category: ServiceCategory.CABELO,
+    duration: '4h+',
+    // TROQUE A IMAGEM ABAIXO
+    imageUrl: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=1000&auto=format&fit=crop',
+    featured: false,
+    availableIn: ['sorriso']
+  },
 
-  // --- MANICURE ---
+  // ==========================================================================
+  // CATEGORIA: MANICURE & SPA
+  // ==========================================================================
   {
     id: 'spa-maos-pes',
     title: 'Spa dos Pés e Mãos',
@@ -199,6 +246,7 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 120,00',
     category: ServiceCategory.MANICURE,
     duration: '1h 30m',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=1000&auto=format&fit=crop',
     featured: false,
     availableIn: ['sorriso', 'chapadao']
@@ -210,12 +258,27 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 200,00',
     category: ServiceCategory.MANICURE,
     duration: '2h',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1000&auto=format&fit=crop',
     featured: false,
     availableIn: ['sorriso', 'chapadao']
   },
+  {
+    id: 'blindagem-diamante',
+    title: 'Blindagem de Diamante',
+    description: 'Proteção extra para suas unhas naturais, garantindo que o esmalte dure até 3x mais sem descascar.',
+    price: 'A partir de R$ 150,00',
+    category: ServiceCategory.MANICURE,
+    duration: '1h 30m',
+    // TROQUE A IMAGEM ABAIXO
+    imageUrl: 'https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?q=80&w=1000&auto=format&fit=crop',
+    featured: false,
+    availableIn: ['sorriso']
+  },
   
-  // --- FACIAL EXTRA ---
+  // ==========================================================================
+  // CATEGORIA: ESTÉTICA FACIAL
+  // ==========================================================================
   {
     id: 'limpeza-pele-premium',
     title: 'Limpeza de Pele Premium',
@@ -223,9 +286,34 @@ export const SERVICES: ServiceItem[] = [
     price: 'A partir de R$ 180,00',
     category: ServiceCategory.FACIAL,
     duration: '1h 30m',
+    // TROQUE A IMAGEM ABAIXO
     imageUrl: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1000&auto=format&fit=crop',
     featured: false,
     availableIn: ['sorriso', 'chapadao']
+  },
+  {
+    id: 'buco-linha',
+    title: 'Epilação de Buço (Egípcia)',
+    description: 'Remoção dos pêlos do buço com linha, garantindo acabamento perfeito e duradouro sem agredir a pele sensível da região.',
+    price: 'A partir de R$ 30,00',
+    category: ServiceCategory.FACIAL,
+    duration: '15m',
+    // TROQUE A IMAGEM ABAIXO
+    imageUrl: 'https://images.unsplash.com/photo-1512413914633-b5043f4041ea?q=80&w=1000&auto=format&fit=crop', // Imagem reutilizada de rosto
+    featured: false,
+    availableIn: ['sorriso', 'chapadao']
+  },
+  {
+    id: 'drenagem-facial',
+    title: 'Drenagem Linfática Facial',
+    description: 'Massagem suave que reduz o inchaço, melhora a circulação e define o contorno do rosto. Perfeito para pré-make.',
+    price: 'A partir de R$ 100,00',
+    category: ServiceCategory.FACIAL,
+    duration: '45m',
+    // TROQUE A IMAGEM ABAIXO
+    imageUrl: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?q=80&w=1000&auto=format&fit=crop',
+    featured: false,
+    availableIn: ['sorriso']
   }
 ];
 
@@ -239,6 +327,7 @@ export const UNITS: Record<string, UnitConfig> = {
     whatsappDisplay: '(66) 9 9913-7037', 
     mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.266872528768!2d-55.7203619!3d-12.5471389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93a0b66113b52d77%3A0x66f600371465227!2sRua%20C%C3%A2ndido%20Rondon%2C%202795%20-%20Centro%2C%20Sorriso%20-%20MT%2C%2078890-000!5e0!3m2!1spt-BR!2sbr!4v1709220000000!5m2!1spt-BR!2sbr', 
     instagramHandle: '@patriciarios.sorriso',
+    // TROQUE A IMAGEM DA UNIDADE SORRISO ABAIXO
     heroImage: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=2000&auto=format&fit=crop',
     description: 'Um santuário dedicado à autoestima no coração de Sorriso. Projetado com arquitetura minimalista e sensorial, nosso Loft oferece um ambiente onde o luxo encontra o acolhimento. Cada detalhe, da iluminação à aromaterapia, foi pensado para desconectar você do mundo lá fora e focar no seu momento.',
     amenities: [
@@ -250,6 +339,7 @@ export const UNITS: Record<string, UnitConfig> = {
       'Estacionamento Privativo'
     ],
     galleryImages: [
+      // TROQUE AS IMAGENS DA GALERIA ABAIXO
       'https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1000&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1556910103-1c02745a30bf?q=80&w=1000&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?q=80&w=1000&auto=format&fit=crop'
@@ -264,6 +354,7 @@ export const UNITS: Record<string, UnitConfig> = {
     whatsappDisplay: '(67) 3562-4335',
     mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.1983577382!2d-52.6247!3d-18.7905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x949021c17293f91f%3A0x123456789!2sAv.%20Oito%2C%20832%20-%20Centro%2C%20Chapad%C3%A3o%20do%20Sul%20-%20MS%2C%2079560-000!5e0!3m2!1spt-BR!2sbr', 
     instagramHandle: '@patriciarios.chapadao',
+    // TROQUE A IMAGEM DA UNIDADE CHAPADÃO ABAIXO
     heroImage: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2000&auto=format&fit=crop',
     description: 'Sofisticação e tecnologia em Chapadão do Sul. Nosso espaço combina design contemporâneo com tecnologia de ponta para oferecer tratamentos de alta performance. Um ambiente intimista, ideal para quem busca privacidade e resultados excepcionais.',
     amenities: [
@@ -275,6 +366,7 @@ export const UNITS: Record<string, UnitConfig> = {
       'Consultoria Personalizada'
     ],
     galleryImages: [
+      // TROQUE AS IMAGENS DA GALERIA ABAIXO
       'https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=1000&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1595514020180-7212f71695e9?q=80&w=1000&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?q=80&w=1000&auto=format&fit=crop'

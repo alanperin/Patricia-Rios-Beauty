@@ -4,6 +4,7 @@ import { useUnits } from '../hooks/useContent';
 import Button from './Button';
 import CustomCursor from './CustomCursor';
 import { Menu, X, Instagram, Facebook, MapPin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -26,7 +27,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -42,18 +43,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { label: 'Catálogo', path: '/catalogo' },
   ];
 
-  // Modern Glassmorphism Header
-  const headerClasses = `fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b 
-    ${scrolled 
-      ? 'bg-brand-cream/80 backdrop-blur-md py-3 md:py-4 border-brand-brown/5 shadow-sm' 
-      : (isHome ? 'bg-transparent border-transparent py-6 md:py-8' : 'bg-brand-cream/80 backdrop-blur-md py-3 md:py-4 border-brand-brown/5')
-    }`;
-
-  const headerTextClass = isHome && !scrolled 
-    ? 'text-brand-white' 
-    : 'text-brand-brown';
-
+  // Cores dinâmicas baseadas no scroll e página
   const logoColor = isHome && !scrolled ? '#FFFFFF' : '#2A231C';
+  const textColor = isHome && !scrolled ? 'text-brand-white' : 'text-brand-brown';
+  const buttonVariant = isHome && !scrolled ? 'outline-light' : 'primary';
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-brand-cream text-brand-brown selection:bg-brand-gold selection:text-brand-white relative">
@@ -63,104 +56,131 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Luxury Custom Cursor */}
       <CustomCursor />
 
-      {/* HEADER */}
-      <header className={headerClasses}>
-        <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group relative z-50">
+      {/* HEADER MODERNO */}
+      <motion.header 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent
+          ${scrolled 
+            ? 'bg-brand-cream/80 backdrop-blur-xl py-3 shadow-sm border-brand-brown/5' 
+            : 'bg-transparent py-6'
+          }`}
+      >
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 flex items-center justify-between">
+          
+          {/* LOGO */}
+          <Link to="/" className="flex items-center gap-4 group relative z-50">
             <PRLogo className={`transition-all duration-500 ${scrolled ? 'w-8 h-8' : 'w-10 h-10'}`} color={logoColor} />
             <div className="flex flex-col">
-              <span className={`font-serif text-lg tracking-widest leading-none group-hover:text-brand-gold transition-colors duration-300 ${headerTextClass}`}>PATRICIA RIOS</span>
-              <span className="text-[8px] uppercase tracking-[0.3em] text-brand-gold mt-1">Beauty & Academy</span>
+              <span className={`font-serif text-lg tracking-[0.15em] leading-none group-hover:text-brand-gold transition-colors duration-300 ${textColor}`}>
+                PATRICIA RIOS
+              </span>
+              <span className={`text-[8px] uppercase tracking-[0.4em] mt-1 font-medium transition-colors duration-300 ${isHome && !scrolled ? 'text-brand-white/60' : 'text-brand-gold'}`}>
+                Loft Beauty
+              </span>
             </div>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-10">
+          {/* DESKTOP NAV */}
+          <nav className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
               <Link 
                 key={link.path} 
                 to={link.path}
-                className={`text-xs uppercase tracking-[0.2em] font-medium hover:text-brand-gold transition-all duration-300 relative group ${headerTextClass}`}
+                className={`text-[11px] uppercase tracking-[0.25em] font-medium hover:text-brand-gold transition-all duration-300 relative group py-2 ${textColor}`}
               >
                 {link.label}
-                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-brand-gold transition-all duration-300 group-hover:w-full"></span>
+                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1px] transition-all duration-300 group-hover:w-full ${isHome && !scrolled ? 'bg-brand-white' : 'bg-brand-gold'}`}></span>
               </Link>
             ))}
             
-            <div className="relative group cursor-pointer py-4">
-              <span className={`text-xs uppercase tracking-[0.2em] font-medium group-hover:text-brand-gold transition-colors flex items-center gap-1 ${headerTextClass}`}>
+            {/* Dropdown Unidades */}
+            <div className="relative group cursor-pointer py-2">
+              <span className={`text-[11px] uppercase tracking-[0.25em] font-medium group-hover:text-brand-gold transition-colors flex items-center gap-1 ${textColor}`}>
                 Unidades
               </span>
-              <div className="absolute top-full right-0 w-56 bg-white/95 backdrop-blur-xl border border-brand-brown/5 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 pt-2 rounded-sm overflow-hidden">
-                 {!loading && units.map(unit => (
-                    <Link 
-                      key={unit.slug} 
-                      to={`/unidade/${unit.slug}`}
-                      className="block px-8 py-4 text-xs uppercase tracking-widest text-brand-brown hover:bg-brand-champagne/30 hover:text-brand-gold transition-colors border-b border-brand-brown/5 last:border-0"
-                    >
-                      {unit.city.split('-')[0]}
-                    </Link>
-                 ))}
+              <div className="absolute top-full right-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                 <div className="bg-white/90 backdrop-blur-xl border border-brand-brown/5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] rounded-sm overflow-hidden min-w-[200px]">
+                   {!loading && units.map(unit => (
+                      <Link 
+                        key={unit.slug} 
+                        to={`/unidade/${unit.slug}`}
+                        className="block px-6 py-4 text-[10px] uppercase tracking-widest text-brand-brown hover:bg-brand-champagne/30 hover:text-brand-gold transition-colors border-b border-brand-brown/5 last:border-0"
+                      >
+                        {unit.city.split('-')[0]}
+                      </Link>
+                   ))}
+                 </div>
               </div>
             </div>
 
             <Button 
-              variant={isHome && !scrolled ? "outline-light" : "outline"} 
-              className="px-8 py-2.5 text-xs backdrop-blur-sm"
+              variant={buttonVariant} 
+              className="px-8 py-2.5 text-[10px] backdrop-blur-sm tracking-widest"
             >
               Agendar
             </Button>
           </nav>
 
-          {/* Mobile Toggle */}
+          {/* MOBILE TOGGLE */}
           <button 
-            className={`md:hidden relative z-50 p-2 -mr-2 ${headerTextClass}`}
+            className={`md:hidden relative z-50 p-2 -mr-2 transition-colors duration-300 ${textColor}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-8 h-8" />}
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
-      </header>
+      </motion.header>
 
       {/* MOBILE MENU - Full Screen Editorial */}
-      <div className={`fixed inset-0 bg-brand-brown z-40 transition-all duration-700 ease-in-out md:hidden flex flex-col justify-between ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'}`}>
-         <div className="flex flex-col items-center justify-center flex-grow gap-8 p-6 w-full relative overflow-hidden">
-            {/* Background Decoration */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border-[40px] border-brand-gold/5 rounded-full pointer-events-none"></div>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: '-100%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: '-100%' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 bg-brand-brown z-40 md:hidden flex flex-col"
+          >
+             <div className="flex flex-col items-center justify-center flex-grow gap-8 p-6 w-full relative overflow-hidden">
+                {/* Background Decoration */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border-[1px] border-brand-white/5 rounded-full pointer-events-none animate-spin-slow"></div>
 
-            {navLinks.map((link, idx) => (
-              <Link 
-                key={link.path} 
-                to={link.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-4xl font-serif text-brand-cream hover:text-brand-gold transition-all duration-300 hover:scale-105 hover:italic"
-                style={{ transitionDelay: `${idx * 100}ms` }}
-              >
-                {link.label}
-              </Link>
-            ))}
-            
-            <div className="w-16 h-[1px] bg-brand-white/10 my-4"></div>
-            
-            <div className="space-y-4 text-center">
-              <p className="text-xs uppercase tracking-[0.4em] text-brand-gold mb-2 opacity-80">Nossas Unidades</p>
-              {!loading && units.map(unit => (
-                 <Link 
-                    key={unit.slug} 
-                    to={`/unidade/${unit.slug}`}
+                {navLinks.map((link, idx) => (
+                  <Link 
+                    key={link.path} 
+                    to={link.path}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block text-xl font-serif text-brand-white/70 hover:text-brand-white transition-colors"
-                 >
-                    {unit.name}
-                 </Link>
-              ))}
-            </div>
-         </div>
-         <div className="p-8 w-full border-t border-brand-white/10 bg-brand-brown">
-            <Button variant="primary" className="w-full">Agendar Agora</Button>
-         </div>
-      </div>
+                    className="text-3xl font-serif text-brand-cream hover:text-brand-gold transition-all duration-300 hover:scale-105 hover:italic"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                
+                <div className="w-12 h-[1px] bg-brand-gold/30 my-2"></div>
+                
+                <div className="space-y-6 text-center">
+                  <p className="text-[9px] uppercase tracking-[0.4em] text-brand-gold mb-2 opacity-80">Unidades Loft</p>
+                  {!loading && units.map(unit => (
+                     <Link 
+                        key={unit.slug} 
+                        to={`/unidade/${unit.slug}`}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block text-xl font-serif text-brand-white/70 hover:text-brand-white transition-colors"
+                     >
+                        {unit.name.replace('Loft Beauty ', '')}
+                     </Link>
+                  ))}
+                </div>
+             </div>
+             <div className="p-8 w-full border-t border-brand-white/10 bg-brand-brown/50 backdrop-blur-sm">
+                <Button variant="primary" className="w-full">Agendar Agora</Button>
+             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* MAIN CONTENT */}
       <main className="flex-grow w-full overflow-x-hidden relative z-10">

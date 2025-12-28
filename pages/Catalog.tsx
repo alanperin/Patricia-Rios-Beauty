@@ -128,7 +128,7 @@ const Catalog: React.FC = () => {
           <div ref={servicesListRef} className="scroll-mt-48"></div>
 
           {/* Content */}
-          <motion.div layout className={`min-h-[400px] ${viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8' : 'flex flex-col gap-6'}`}>
+          <motion.div layout className={`min-h-[400px] ${viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-fr' : 'flex flex-col gap-6'}`}>
             <AnimatePresence mode="popLayout">
               {filteredServices.map((service) => (
                 viewMode === 'grid' 
@@ -202,7 +202,7 @@ const UnitSelectionScreen: React.FC<{ units: UnitConfig[] }> = ({ units }) => {
     )
 }
 
-// --- GRID VIEW COMPONENT ---
+// --- GRID VIEW COMPONENT (Atualizado para Altura Uniforme) ---
 const ServiceCardGrid: React.FC<{ service: ServiceItem, whatsappNumber: string, unitName: string }> = ({ service, whatsappNumber, unitName }) => {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Olá! Vim pelo catálogo online da unidade *${unitName}* e me interessei pelo *${service.title}*. Poderia me dar mais detalhes?`;
 
@@ -215,7 +215,8 @@ const ServiceCardGrid: React.FC<{ service: ServiceItem, whatsappNumber: string, 
       transition={{ duration: 0.4 }}
       className={`group bg-white overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 flex flex-col h-full rounded-sm ${service.featured ? 'border border-brand-gold' : 'border border-brand-brown/5'}`}
     >
-      <div className="h-64 md:h-72 overflow-hidden relative">
+      {/* Container de Imagem com Altura Fixa para Alinhamento */}
+      <div className="h-64 overflow-hidden relative flex-shrink-0">
         <img 
           src={service.imageUrl} 
           alt={service.title} 
@@ -233,14 +234,16 @@ const ServiceCardGrid: React.FC<{ service: ServiceItem, whatsappNumber: string, 
         <div className="flex justify-between items-start mb-3">
           <span className="text-[9px] font-bold text-brand-gold uppercase tracking-[0.25em] font-sans">{service.category}</span>
           {service.duration && (
-            <div className="flex items-center gap-1 text-[10px] text-brand-gray font-sans tracking-wide border border-brand-brown/10 px-2 py-1 rounded-full">
+            <div className="flex items-center gap-1 text-[10px] text-brand-gray font-sans tracking-wide border border-brand-brown/10 px-2 py-1 rounded-full whitespace-nowrap">
                <Clock className="w-3 h-3" />
                {service.duration}
             </div>
           )}
         </div>
         
-        <h3 className="font-serif text-xl md:text-2xl text-brand-brown mb-4 group-hover:text-brand-gold transition-colors leading-tight">{service.title}</h3>
+        <h3 className="font-serif text-xl md:text-2xl text-brand-brown mb-4 group-hover:text-brand-gold transition-colors leading-tight min-h-[3rem] line-clamp-2">
+            {service.title}
+        </h3>
         
         <p className="text-brand-gray text-sm leading-relaxed mb-6 font-sans font-light line-clamp-3 flex-grow">
           {service.description}

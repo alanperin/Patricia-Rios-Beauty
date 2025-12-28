@@ -10,7 +10,7 @@ import { ArrowRight, Star, GraduationCap, Award, BookOpen, Quote, ChevronLeft, C
 const Home: React.FC = () => {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 1000], [0, 400]); // Parallax slower
-  const yText = useTransform(scrollY, [0, 500], [0, 100]);
+  const yText = useTransform(scrollY, [0, 500], [0, 150]);
   const opacityHero = useTransform(scrollY, [0, 600], [1, 0]);
 
   // Data Fetching
@@ -62,67 +62,91 @@ const Home: React.FC = () => {
 
   return (
     <Layout>
-      {/* SECTION 1: MODERN EDITORIAL HERO */}
+      {/* SECTION 1: MODERN & SOPHISTICATED HERO */}
       <section className="relative w-full h-screen min-h-[700px] overflow-hidden bg-brand-brown">
         {/* Parallax Image Background */}
         <motion.div style={{ y: y1, opacity: opacityHero }} className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-brown/90 via-transparent to-black/30 z-10" />
+          <div className="absolute inset-0 bg-black/30 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-brand-brown/90 z-10" />
           <img 
             src="https://images.unsplash.com/photo-1594744803329-a584af1dd51e?q=80&w=2787&auto=format&fit=crop" 
             alt="Patricia Rios High Fashion" 
-            className="w-full h-[120%] object-cover object-top opacity-90 brightness-95"
+            className="w-full h-[120%] object-cover object-top opacity-95 brightness-90"
           />
         </motion.div>
 
-        {/* Content Layer */}
-        <div className="relative z-20 h-full flex flex-col justify-end pb-24 md:pb-32 max-w-[1400px] mx-auto px-6">
-          <motion.div style={{ y: yText }} className="max-w-5xl">
-             {/* Editorial Label */}
-             <div className="flex items-center gap-4 mb-6 md:mb-8 overflow-hidden">
-                <motion.div 
-                  initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.8, ease: "circOut" }}
-                  className="h-[1px] w-12 md:w-20 bg-brand-gold"
-                ></motion.div>
-                <motion.span 
-                  initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-                  className="text-brand-gold uppercase tracking-[0.3em] md:tracking-[0.5em] text-[10px] md:text-xs font-bold font-sans"
-                >
-                  Beleza de Alto Padrão & Educação
-                </motion.span>
-             </div>
+        {/* Content Layer - Centered & Majestic */}
+        <div className="relative z-20 h-full flex flex-col items-center justify-center text-center max-w-[1400px] mx-auto px-6">
+          <motion.div style={{ y: yText }} className="flex flex-col items-center">
+             
+             {/* Small Top Label */}
+             <motion.div 
+               initial={{ opacity: 0, y: 20 }} 
+               animate={{ opacity: 1, y: 0 }} 
+               transition={{ duration: 0.8, delay: 0.2 }}
+               className="mb-6 md:mb-8"
+             >
+                <span className="text-white/80 uppercase tracking-[0.4em] text-[9px] md:text-xs font-medium font-sans border border-white/20 px-4 py-2 rounded-full backdrop-blur-md">
+                   High-End Beauty & Education
+                </span>
+             </motion.div>
 
-             {/* Staggered Headline Reveal */}
-             <h1 className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-serif text-brand-white leading-[0.85] tracking-tighter mb-8 md:mb-12">
-                <div className="overflow-hidden">
-                  <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}>
-                    PATRÍCIA
-                  </motion.div>
-                </div>
-                <div className="overflow-hidden flex items-baseline gap-4">
-                  <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }} className="italic text-brand-gold font-light pr-4">
-                    RIOS
-                  </motion.div>
-                </div>
-             </h1>
-
-             {/* Description & CTA */}
-             <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-t border-brand-white/20 pt-8 md:pt-10">
-                <motion.p 
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.4 }}
-                  className="text-brand-white/80 text-base md:text-xl font-light max-w-xl leading-relaxed font-sans"
+             {/* Main Titles - Unified & Elegant */}
+             <div className="relative mb-8 md:mb-12">
+                <motion.h1 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-6xl sm:text-8xl md:text-9xl font-serif text-white leading-none tracking-tight drop-shadow-2xl"
                 >
-                  Especialista em Micropigmentação Realista e Mentora de Profissionais de Elite. Onde a arte encontra a técnica de precisão.
-                </motion.p>
-                
+                  Patricia Rios
+                </motion.h1>
                 <motion.div 
-                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.6 }}
-                  className="flex gap-4 md:gap-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                  className="mt-2 md:-mt-4"
                 >
-                   <Link to="/catalogo">
-                     <Button variant="outline-light" className="px-10 py-4 hover:bg-brand-white hover:text-brand-brown">Agendar Visita</Button>
-                   </Link>
+                   <span className="font-serif italic text-4xl sm:text-5xl md:text-6xl text-brand-gold tracking-wide">
+                      Loft Beauty
+                   </span>
                 </motion.div>
              </div>
+
+             {/* Description & CTA */}
+             <motion.p 
+               initial={{ opacity: 0 }} 
+               animate={{ opacity: 1 }} 
+               transition={{ duration: 1, delay: 0.5 }}
+               className="text-white/90 text-sm md:text-lg font-light max-w-lg leading-relaxed font-sans mb-10 md:mb-14 drop-shadow-md"
+             >
+               Onde a arte encontra a precisão técnica. <br className="hidden md:block"/>
+               Referência em Micropigmentação Realista e Mentoria de Elite.
+             </motion.p>
+             
+             <motion.div 
+               initial={{ opacity: 0, y: 20 }} 
+               animate={{ opacity: 1, y: 0 }} 
+               transition={{ duration: 1, delay: 0.7 }}
+               className="flex gap-4 md:gap-6"
+             >
+                <Link to="/catalogo">
+                  <Button variant="outline-light" className="px-12 py-4 text-xs md:text-sm backdrop-blur-sm hover:bg-white hover:text-brand-brown transition-all duration-500">
+                    Reserve Seu Momento
+                  </Button>
+                </Link>
+             </motion.div>
+          </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 1 }}
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          >
+             <span className="text-[9px] uppercase tracking-widest text-white/50">Explore</span>
+             <div className="w-[1px] h-12 bg-gradient-to-b from-brand-gold to-transparent"></div>
           </motion.div>
         </div>
       </section>
